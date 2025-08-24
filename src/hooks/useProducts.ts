@@ -84,6 +84,11 @@ export const useCartItems = (sessionId: string) => {
   return useQuery({
     queryKey: ['cart', sessionId],
     queryFn: async () => {
+      // Security: Validate session ID before querying
+      if (!sessionId || sessionId.length < 10) {
+        throw new Error('Invalid session ID');
+      }
+
       const { data, error } = await supabase
         .from('cart_items')
         .select(`
@@ -95,11 +100,12 @@ export const useCartItems = (sessionId: string) => {
             base_price
           )
         `)
-        .eq('session_id', sessionId);
+        .eq('session_id', sessionId); // Always filter by session_id for security
       
       if (error) throw error;
       return data as (CartItem & { products: Product | null })[];
     },
+    enabled: !!sessionId && sessionId.length > 10, // Only run query with valid session
   });
 };
 
@@ -124,11 +130,20 @@ export const useAddToCart = () => {
       customOptions?: any;
       price: number;
     }) => {
+      // Security: Validate all inputs
+      if (!productId || !sessionId || !price || quantity < 1) {
+        throw new Error('Invalid input parameters');
+      }
+
+      if (sessionId.length < 10) {
+        throw new Error('Invalid session ID format');
+      }
+
       const { data, error } = await supabase
         .from('cart_items')
         .insert({
           product_id: productId,
-          session_id: sessionId,
+          session_id: sessionId, // Secured by RLS and validation
           quantity,
           selected_color: selectedColor,
           selected_size: selectedSize,
@@ -160,10 +175,17 @@ export const useUpdateCartItem = () => {
       quantity: number;
       sessionId: string;
     }) => {
+      // Security: Validate inputs and ensure session ownership
+      if (!id || !sessionId || quantity < 1) {
+        throw new Error('Invalid update parameters');
+      }
+
+      // Double-check: Update only items that belong to this session
       const { data, error } = await supabase
         .from('cart_items')
         .update({ quantity })
         .eq('id', id)
+        .eq('session_id', sessionId) // Ensure session ownership
         .select()
         .single();
       
@@ -181,10 +203,17 @@ export const useRemoveCartItem = () => {
   
   return useMutation({
     mutationFn: async ({ id, sessionId }: { id: string; sessionId: string }) => {
+      // Security: Validate inputs and ensure session ownership
+      if (!id || !sessionId) {
+        throw new Error('Invalid remove parameters');
+      }
+
+      // Double-check: Delete only items that belong to this session
       const { error } = await supabase
         .from('cart_items')
         .delete()
-        .eq('id', id);
+        .eq('id', id)
+        .eq('session_id', sessionId); // Ensure session ownership
       
       if (error) throw error;
     },
