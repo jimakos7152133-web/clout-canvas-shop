@@ -125,22 +125,26 @@ const Products = () => {
                 {/* Colors */}
                 {allColors.length > 0 && (
                   <div className="mb-6">
-                    <h4 className="font-medium mb-3">Colors</h4>
-                    <div className="space-y-2">
+                    <h4 className="font-medium mb-3">Color</h4>
+                    <div className="flex gap-2 flex-wrap">
                       {allColors.map(color => (
-                        <div key={color} className="flex items-center space-x-2">
-                          <Checkbox
-                            id={`color-${color}`}
-                            checked={selectedColors.includes(color)}
-                            onCheckedChange={() => toggleColor(color)}
-                          />
-                          <label 
-                            htmlFor={`color-${color}`} 
-                            className="text-sm cursor-pointer"
-                          >
-                            {color}
-                          </label>
-                        </div>
+                        <button
+                          key={color}
+                          onClick={() => toggleColor(color)}
+                          className={`relative w-8 h-8 rounded-full border-2 transition-all ${
+                            selectedColors.includes(color)
+                              ? 'border-primary ring-2 ring-primary/20' 
+                              : 'border-muted hover:border-primary/50'
+                          }`}
+                          style={{ backgroundColor: color.toLowerCase() === 'white' ? '#ffffff' : color.toLowerCase() }}
+                          title={color}
+                        >
+                          {selectedColors.includes(color) && (
+                            <div className="absolute inset-0 flex items-center justify-center">
+                              <div className={`w-2 h-2 rounded-full ${color.toLowerCase() === 'white' ? 'bg-black' : 'bg-white'}`} />
+                            </div>
+                          )}
+                        </button>
                       ))}
                     </div>
                   </div>
@@ -149,17 +153,20 @@ const Products = () => {
                 {/* Sizes */}
                 {allSizes.length > 0 && (
                   <div className="mb-6">
-                    <h4 className="font-medium mb-3">Sizes</h4>
-                    <div className="flex flex-wrap gap-2">
+                    <h4 className="font-medium mb-3">Size</h4>
+                    <div className="grid grid-cols-3 gap-2">
                       {allSizes.map(size => (
-                        <Badge
+                        <button
                           key={size}
-                          variant={selectedSizes.includes(size) ? "default" : "outline"}
-                          className="cursor-pointer"
                           onClick={() => toggleSize(size)}
+                          className={`px-3 py-2 border rounded-md text-sm font-medium transition-colors ${
+                            selectedSizes.includes(size)
+                              ? 'bg-primary text-primary-foreground border-primary'
+                              : 'bg-background border-muted hover:border-primary'
+                          }`}
                         >
                           {size}
-                        </Badge>
+                        </button>
                       ))}
                     </div>
                   </div>

@@ -196,18 +196,30 @@ const ProductDetail = () => {
               {product.colors && product.colors.length > 0 && (
                 <div>
                   <label className="block text-sm font-medium mb-2">Color</label>
-                  <Select value={selectedColor} onValueChange={setSelectedColor}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a color" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {product.colors.map((color) => (
-                        <SelectItem key={color} value={color}>
-                          {color}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <div className="flex gap-2">
+                    {product.colors.map((color) => (
+                      <button
+                        key={color}
+                        onClick={() => setSelectedColor(color)}
+                        className={`relative w-8 h-8 rounded-full border-2 transition-all ${
+                          selectedColor === color 
+                            ? 'border-primary ring-2 ring-primary/20' 
+                            : 'border-muted hover:border-primary/50'
+                        }`}
+                        style={{ backgroundColor: color.toLowerCase() === 'white' ? '#ffffff' : color.toLowerCase() }}
+                        title={color}
+                      >
+                        {selectedColor === color && (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <div className={`w-2 h-2 rounded-full ${color.toLowerCase() === 'white' ? 'bg-black' : 'bg-white'}`} />
+                          </div>
+                        )}
+                      </button>
+                    ))}
+                  </div>
+                  {selectedColor && (
+                    <p className="text-sm text-muted-foreground">Selected: {selectedColor}</p>
+                  )}
                 </div>
               )}
 
@@ -215,18 +227,21 @@ const ProductDetail = () => {
               {product.sizes && product.sizes.length > 0 && (
                 <div>
                   <label className="block text-sm font-medium mb-2">Size</label>
-                  <Select value={selectedSize} onValueChange={setSelectedSize}>
-                    <SelectTrigger>
-                      <SelectValue placeholder="Select a size" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {product.sizes.map((size) => (
-                        <SelectItem key={size} value={size}>
-                          {size}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
+                  <div className="flex gap-2 flex-wrap">
+                    {product.sizes.map((size) => (
+                      <button
+                        key={size}
+                        onClick={() => setSelectedSize(size)}
+                        className={`px-4 py-2 border rounded-md text-sm font-medium transition-colors ${
+                          selectedSize === size
+                            ? 'bg-primary text-primary-foreground border-primary'
+                            : 'bg-background border-muted hover:border-primary'
+                        }`}
+                      >
+                        {size}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               )}
 
