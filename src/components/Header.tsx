@@ -1,6 +1,8 @@
 import { Search, ShoppingCart, Heart, User, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Link } from "react-router-dom";
+import CartDrawer from "@/components/CartDrawer";
 
 const Header = () => {
   return (
@@ -24,28 +26,30 @@ const Header = () => {
             </Button>
 
             {/* Logo */}
-            <div className="flex-shrink-0">
-              <h1 className="text-2xl font-bold">
-                <span className="gradient-brand">CLOUT</span>
-                <span className="text-foreground">STREET</span>
-              </h1>
-            </div>
+            <Link to="/">
+              <div className="flex-shrink-0">
+                <h1 className="text-2xl font-bold cursor-pointer">
+                  <span className="gradient-brand">CLOUT</span>
+                  <span className="text-foreground">STREET</span>
+                </h1>
+              </div>
+            </Link>
 
             {/* Navigation */}
             <nav className="hidden md:flex space-x-8">
-              <a href="#" className="text-foreground hover:text-primary transition-smooth font-medium">
+              <Link to="/" className="text-foreground hover:text-primary transition-smooth font-medium">
                 Home
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-smooth font-medium">
+              </Link>
+              <Link to="/products" className="text-muted-foreground hover:text-primary transition-smooth font-medium">
                 Shop
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-smooth font-medium">
+              </Link>
+              <Link to="/products/custom-designs" className="text-muted-foreground hover:text-primary transition-smooth font-medium">
                 Custom Orders
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-smooth font-medium">
+              </Link>
+              <Link to="/products/business-promotion" className="text-muted-foreground hover:text-primary transition-smooth font-medium">
                 Business Promo
-              </a>
-              <a href="#" className="text-muted-foreground hover:text-primary transition-smooth font-medium">
+              </Link>
+              <a href="#contact" className="text-muted-foreground hover:text-primary transition-smooth font-medium">
                 Contact
               </a>
             </nav>
@@ -73,12 +77,11 @@ const Header = () => {
               <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">
                 <Heart className="h-5 w-5" />
               </Button>
-              <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary relative">
-                <ShoppingCart className="h-5 w-5" />
-                <span className="absolute -top-1 -right-1 h-4 w-4 bg-primary text-primary-foreground text-xs rounded-full flex items-center justify-center font-medium">
-                  0
-                </span>
-              </Button>
+              <CartDrawer>
+                <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary relative">
+                  <ShoppingCart className="h-5 w-5" />
+                </Button>
+              </CartDrawer>
             </div>
           </div>
         </div>

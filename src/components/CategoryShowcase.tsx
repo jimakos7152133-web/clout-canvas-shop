@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Link } from "react-router-dom";
 import productTshirt from "@/assets/product-tshirt.jpg";
 import heroHoodie from "@/assets/hero-hoodie.jpg";
 import businessPromo from "@/assets/business-promo.jpg";
@@ -11,7 +12,7 @@ const categories = [
     image: productTshirt,
     itemCount: 24,
     description: "Essential pieces for everyday wear",
-    href: "/category/tshirts"
+    href: "streetwear"
   },
   {
     id: 2,
@@ -19,7 +20,7 @@ const categories = [
     image: heroHoodie,
     itemCount: 18,
     description: "Premium comfort meets street style",
-    href: "/category/hoodies"
+    href: "streetwear"
   },
   {
     id: 3,
@@ -27,7 +28,7 @@ const categories = [
     image: businessPromo,
     itemCount: 32,
     description: "Professional branded merchandise",
-    href: "/category/business"
+    href: "business-promotion"
   },
   {
     id: 4,
@@ -35,7 +36,7 @@ const categories = [
     image: productBomber,
     itemCount: 12,
     description: "Jackets, bombers & fleece",
-    href: "/category/outerwear"
+    href: "streetwear"
   }
 ];
 
@@ -84,13 +85,15 @@ const CategoryShowcase = () => {
                 <p className="text-muted-foreground text-sm mb-4 leading-relaxed">
                   {category.description}
                 </p>
-                <Button 
-                  variant="secondary" 
-                  size="sm"
-                  className="group-hover:bg-primary group-hover:text-primary-foreground transition-all shadow-none group-hover:shadow-brand"
-                >
-                  Shop Now
-                </Button>
+                <Link to={`/products/${category.href}`}>
+                  <Button 
+                    variant="secondary" 
+                    size="sm"
+                    className="group-hover:bg-primary group-hover:text-primary-foreground transition-all shadow-none group-hover:shadow-brand"
+                  >
+                    Shop Now
+                  </Button>
+                </Link>
               </div>
 
               {/* Hover Effect */}
@@ -110,9 +113,11 @@ const CategoryShowcase = () => {
               we've got you covered with premium quality and fast turnaround times.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button variant="hero" size="lg" className="shadow-glow">
-                Start Custom Order
-              </Button>
+              <Link to="/products/custom-designs">
+                <Button variant="hero" size="lg" className="shadow-glow">
+                  Start Custom Order
+                </Button>
+              </Link>
               <Button variant="outline" size="lg">
                 View Portfolio
               </Button>
