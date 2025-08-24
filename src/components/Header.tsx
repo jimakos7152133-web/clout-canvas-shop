@@ -27,7 +27,7 @@ const Header = () => {
 
             {/* Logo */}
             <Link to="/">
-              <div className="flex-shrink-0">
+              <div className="flex-shrink-0 mr-8">
                 <h1 className="text-2xl font-bold cursor-pointer">
                   <span className="gradient-brand">CLOUT</span>
                   <span className="text-foreground">STREET</span>
@@ -36,7 +36,7 @@ const Header = () => {
             </Link>
 
             {/* Navigation */}
-            <nav className="hidden md:flex space-x-8">
+            <nav className="hidden md:flex space-x-6 lg:space-x-8 flex-1">
               <Link to="/" className="text-foreground hover:text-primary transition-smooth font-medium">
                 Home
               </Link>
