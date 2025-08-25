@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useState, useRef } from "react";
 import Header from "@/components/Header";
+import Footer from "@/components/Footer";
 import { useProduct } from "@/hooks/useProducts";
 import { useCart } from "@/hooks/useCart";
 import { useAddToCart } from "@/hooks/useProducts";
@@ -452,6 +453,7 @@ const CustomProduct = () => {
           </div>
         </div>
       </main>
+      <Footer />
     </div>
   );
 };
